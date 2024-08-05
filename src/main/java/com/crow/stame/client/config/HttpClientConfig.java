@@ -14,6 +14,7 @@ public class HttpClientConfig {
     public WebClient kitsuWebClient(WebClient.Builder webClientBuilder) {
         return webClientBuilder.baseUrl(kitsuApiUrl)
                 .defaultHeader("Accept", "application/vnd.api+json")
+                .defaultHeader("Content-Type", "application/vnd.api+json")
                 .build();
     }
 }

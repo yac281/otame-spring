@@ -1,15 +1,14 @@
 package com.crow.stame.client.dto;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Setter
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AnimeContent {
+public class EpisodeContent {
     @JsonProperty("id")
     private String id;
 
@@ -17,5 +16,5 @@ public class AnimeContent {
     private String type;
 
     @JsonProperty("attributes")
-    private AnimeContentAttributes attributes;
+    private EpisodeContentAttributes attributes;
 }

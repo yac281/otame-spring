@@ -1,17 +1,20 @@
-package com.crow.stame.client.dto;
-
+package com.crow.stame.model;
 
 import com.crow.stame.client.dto.attributesdto.PosterImage;
 import com.crow.stame.client.dto.attributesdto.Titles;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Setter
 @Getter
+@Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class AnimeContentAttributes {
+public class AnimeModel {
+
+    @JsonProperty("id")
+    private String id;
+
     @JsonProperty("createdAt")
     private String createdAt;
 
@@ -22,7 +25,7 @@ public class AnimeContentAttributes {
     private String slug;
 
     @JsonProperty("posterImage")
-    private PosterImage coverImage;
+    private PosterImage posterImage;
 
     @JsonProperty("titles")
     private Titles titles;
