@@ -15,4 +15,5 @@ public interface KitsuHttpClient {
 
     Mono<List<EpisodeModel>> getNewEpisodesModels();
 
+    Mono<AnimeModel> getDetailAnimeModel(String animeSlug);
 }

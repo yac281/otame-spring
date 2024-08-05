@@ -93,6 +93,30 @@ public class KitsuService implements KitsuHttpClient {
                 });
     }
 
+    public Mono<AnimeModel> getDetailAnimeModel(String animeSlug) {
+        return this.webClient.get()
+                .uri("/edge/anime?filter[slug]=" + animeSlug)
+                .retrieve()
+                .bodyToMono(AnimeContentData.class)
+                .flatMap(animeContentData -> {
+                    if (animeContentData.getData().isEmpty()) {
+                        return Mono.empty();
+                    }
+                    AnimeContent data = animeContentData.getData().get(0);
+                    AnimeContentAttributes attributes = data.getAttributes();
+                    AnimeModel model = new AnimeModel();
+                    model.setId(data.getId());
+                    model.setCreatedAt(attributes.getCreatedAt());
+                    model.setUpdatedAt(attributes.getUpdatedAt());
+                    model.setSlug(attributes.getSlug());
+                    model.setPosterImage(attributes.getCoverImage());
+                    model.setTitles(attributes.getTitles());
+                    model.setDescription(attributes.getDescription());
+                    model.setShowType(attributes.getShowType());
+                    return Mono.just(model);
+                });
+    }
+
 
 
 }

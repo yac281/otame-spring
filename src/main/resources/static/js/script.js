@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 item.className = 'item';
 
                 item.innerHTML = `
-                    <img src="${anime.posterImage.original}" alt="${anime.titles.en_jp}">
+                    <a href="/anime/${anime.slug}">
+                        <img src="${anime.posterImage.original}" alt="${anime.titles.en_jp}">
+                    </a>
                     <div class="text">
                         <span class="badge">${anime.showType}</span>
                         <p>${anime.titles.en_jp}</p>
