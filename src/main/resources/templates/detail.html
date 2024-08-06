@@ -1,122 +1,155 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detail Page</title>
+    <title>Anime Detail</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
             margin: 0;
             padding: 0;
+            background-color: #f8f8f8;
         }
-        .container {
+
+        .detail-container {
             width: 80%;
             margin: 0 auto;
             padding: 20px;
         }
-        .header {
+
+        .detail-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-bottom: 1px solid #eee;
         }
-        .title {
-            font-size: 32px;
+
+        .back-button {
+            background: none;
+            border: none;
+            color: #007BFF;
+            font-size: 18px;
+            cursor: pointer;
         }
-        .profile {
-            display: flex;
-            align-items: center;
-        }
-        .profile img {
-            width: 40px;
-            height: 40px;
+
+        .user-profile img {
             border-radius: 50%;
-            margin-right: 10px;
         }
-        .carousel {
+
+        .detail-content {
             display: flex;
-            overflow-x: auto;
-            scroll-behavior: smooth;
+            padding: 20px;
         }
-        .carousel::-webkit-scrollbar {
-            display: none;
-        }
-        .carousel-item {
-            min-width: 200px;
-            margin-right: 20px;
-            flex: 0 0 auto;
-            position: relative;
-        }
-        .carousel-item img {
-            width: 100%;
+
+        .detail-image img {
+            width: 300px;
+            height: 400px;
             border-radius: 10px;
-            transition: transform 0.3s;
-            width: 200px;
-            height: 300px;
-            object-fit: cover;
+            margin-right: 20px;
         }
-        .carousel-item:hover img {
-            transform: scale(1.05);
+
+        .detail-info {
+            max-width: 700px;
         }
-        .carousel-item .add-to-list {
-            position: absolute;
-            bottom: 10px;
-            left: 10px;
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
+
+        .detail-info h1 {
+            margin-top: 0;
+            font-size: 36px;
+        }
+
+        .detail-status {
+            margin: 10px 0;
+        }
+
+        .badge {
+            display: inline-block;
             padding: 5px 10px;
             border-radius: 5px;
-            font-size: 14px;
-        }
-        .section {
-            margin-top: 40px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 20px;
-        }
-        .item {
-            display: flex;
-        }
-        .item img {
-            width: 80px;
-            height: 80px;
-            border-radius: 15px;
             margin-right: 10px;
-            object-fit: contain;
+            font-size: 14px;
+            color: #fff;
         }
-        .item .text {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+
+        .released {
+            background-color: #FF9800;
         }
-        .item .badge {
-            display: inline-block;
-            background-color: #ff4757;
-            color: white;
+
+        .finished {
+            background-color: #4CAF50;
+        }
+
+        .add-to-list {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
             border-radius: 5px;
-            padding: 5px;
-            font-size: 12px;
-            margin-bottom: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 0;
+        }
+
+        .detail-genre, .detail-duration, .detail-rating, .detail-description {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .detail-rating .rating {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .detail-rating .votes {
+            color: #999;
+        }
+
+        .watch-now {
+            background-color: #FF5722;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <h1 class="title">Detail</h1>
-        <h2 th:text="${anime.id}">Anime Title</h2>
-
-
-        <div class="profile">
-            <img src="https://via.placeholder.com/40" alt="Profile Picture">
-            <span>Username</span>
+<div class="detail-container">
+    <div class="detail-header">
+        <button class="back-button">&larr; Back</button>
+        <div class="user-profile">
+            <img src="https://via.placeholder.com/40" alt="User Profile">
+        </div>
+    </div>
+    <div class="detail-content">
+        <div class="detail-image">
+            <img th:src="${anime.posterImage.original != null ? anime.posterImage.original : 'https://via.placeholder.com/300x400'}" alt="Anime Poster">
+        </div>
+        <div class="detail-info">
+            <h1 th:text="${anime.titles.getEnJp()}">Anime Title</h1>
+            <div class="detail-status">
+                <span class="badge released" th:text="${anime.startDate}">Released Jan 7, 2019</span>
+                <span class="badge finished" th:text="${anime.status}">Status</span>
+            </div>
+            <button class="add-to-list">+ Add to My List</button>
+            <p class="detail-genre">Action, Comedy, Supernatural</p>
+            <p class="detail-duration">24 min/Ep</p>
+            <div class="detail-rating">
+                <span class="rating">4.6</span>
+                <span class="votes">(140,687 votes)</span>
+            </div>
+            <p class="detail-description" th:text="${anime.description}">
+                Description
+            </p>
+            <button class="watch-now">Start Watching Now</button>
         </div>
     </div>
 </div>
-<script src="/js/script.js"></script>
 </body>
 </html>
+

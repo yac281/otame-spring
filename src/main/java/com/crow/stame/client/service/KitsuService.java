@@ -44,8 +44,8 @@ public class KitsuService implements KitsuHttpClient {
                             AnimeModel model = new AnimeModel();
                             AnimeContentAttributes attributes = data.getAttributes();
                             model.setId(data.getId());
-                            model.setCreatedAt(attributes.getCreatedAt());
-                            model.setUpdatedAt(attributes.getUpdatedAt());
+                            model.setStartDate(attributes.getStartDate());
+                            model.setStatus(attributes.getStatus());
                             model.setSlug(attributes.getSlug());
                             model.setPosterImage(attributes.getCoverImage());
                             model.setTitles(attributes.getTitles());
@@ -67,6 +67,7 @@ public class KitsuService implements KitsuHttpClient {
 
                     // Usa il formatter adatto per la data senza orario
                     DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+                    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
                     return dataList.stream()
                             .map(data -> {
@@ -82,7 +83,8 @@ public class KitsuService implements KitsuHttpClient {
                                 // Parsing della data di rilascio e confronto con oggi
                                 LocalDate episodeDate = LocalDate.parse(attributes.getAirdate(), formatter);
                                 if (!episodeDate.isAfter(today)) {
-                                    model.setAirdate(attributes.getAirdate());
+                                    String formattedDate = episodeDate.format(outputFormatter);
+                                    model.setAirdate(formattedDate);
                                     return model;
                                 } else {
                                     return null; // Filtra l'episodio se la data è dopo oggi
@@ -99,20 +101,27 @@ public class KitsuService implements KitsuHttpClient {
                 .retrieve()
                 .bodyToMono(AnimeContentData.class)
                 .flatMap(animeContentData -> {
+                    DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("d MMM, yyyy");
+
                     if (animeContentData.getData().isEmpty()) {
                         return Mono.empty();
                     }
                     AnimeContent data = animeContentData.getData().get(0);
                     AnimeContentAttributes attributes = data.getAttributes();
+                    DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+                    LocalDate episodeDate = LocalDate.parse(attributes.getStartDate(), formatter);
+                    String formattedDate = episodeDate.format(outputFormatter);
+
                     AnimeModel model = new AnimeModel();
                     model.setId(data.getId());
-                    model.setCreatedAt(attributes.getCreatedAt());
-                    model.setUpdatedAt(attributes.getUpdatedAt());
+                    model.setStartDate(formattedDate);
+                    model.setStatus(attributes.getStatus());
                     model.setSlug(attributes.getSlug());
                     model.setPosterImage(attributes.getCoverImage());
                     model.setTitles(attributes.getTitles());
                     model.setDescription(attributes.getDescription());
                     model.setShowType(attributes.getShowType());
+
                     return Mono.just(model);
                 });
     }

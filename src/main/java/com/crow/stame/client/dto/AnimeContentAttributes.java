@@ -12,11 +12,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AnimeContentAttributes {
-    @JsonProperty("createdAt")
-    private String createdAt;
+    @JsonProperty("startDate")
+    private String startDate;
 
-    @JsonProperty("updatedAt")
-    private String updatedAt;
+    @JsonProperty("status")
+    private String status;
 
     @JsonProperty("slug")
     private String slug;

@@ -15,11 +15,11 @@ public class AnimeModel {
     @JsonProperty("id")
     private String id;
 
-    @JsonProperty("createdAt")
-    private String createdAt;
+    @JsonProperty("startDate")
+    private String startDate;
 
-    @JsonProperty("updatedAt")
-    private String updatedAt;
+    @JsonProperty("status")
+    private String status;
 
     @JsonProperty("slug")
     private String slug;
